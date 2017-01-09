@@ -65,11 +65,9 @@ pub fn main() {
 
 // **Exercise 15.1**: Add an operation `compare_and_inc(&self, test: usize, by: usize)` that increments the counter by
 // `by` *only if* the current value is `test`.
-// 
+//
 // **Exercise 15.2**: Rather than panicking in case the lock is poisoned, we can use `into_inner` on the error to recover
 // the data inside the lock. Change the code above to do that. Try using `unwrap_or_else` for this job.
 
 
 // **Exercise 15.3**:  Change the code above to use `RwLock`, such that multiple calls to `get` can be executed at the same time.
-
-

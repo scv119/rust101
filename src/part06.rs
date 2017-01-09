@@ -35,32 +35,27 @@ fn vec_min(v: &Vec<BigInt>) -> Option<BigInt> {
 
 // ## `Copy` types
 
-use part02::{SomethingOrNothing,Something,Nothing};
+use part02::{SomethingOrNothing, Something, Nothing};
 impl<T: Copy> Copy for SomethingOrNothing<T> {}
 
 
 // ## Lifetimes
 
 fn head<T>(v: &Vec<T>) -> Option<&T> {
-    if v.len() > 0 {
-        unimplemented!()
-    } else {
-        None
-    }
+    if v.len() > 0 { unimplemented!() } else { None }
 }
 // Technically, we are returning a pointer to the first element. But doesn't that mean that callers have to be
 // careful? Imagine `head` would be a C++ function, and we would write the following code.
-/*
-  int foo(std::vector<int> v) {
-    int *first = head(v);
-    v.push_back(42);
-    return *first;
-  }
-*/
+//
+// int foo(std::vector<int> v) {
+// int *first = head(v);
+// v.push_back(42);
+// return *first;
+// }
+//
+
 fn rust_foo(mut v: Vec<i32>) -> i32 {
     let first: Option<&i32> = head(&v);
-    /* v.push(42); */
+    // v.push(42);
     *first.unwrap()
 }
-
-

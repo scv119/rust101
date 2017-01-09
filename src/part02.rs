@@ -4,7 +4,7 @@
 
 // ## Generic datatypes
 
-pub enum SomethingOrNothing<T>  {
+pub enum SomethingOrNothing<T> {
     Something(T),
     Nothing,
 }
@@ -31,7 +31,7 @@ fn call_constructor(x: i32) -> SomethingOrNothing<i32> {
 
 // ## Traits
 
-pub trait Minimum : Copy {
+pub trait Minimum: Copy {
     fn min(self, b: Self) -> Self;
 }
 
@@ -41,9 +41,7 @@ pub fn vec_min<T: Minimum>(v: Vec<T>) -> SomethingOrNothing<T> {
         min = Something(match min {
             Nothing => e,
             // Here, we can now call the `min` function of the trait.
-            Something(n) => {
-                unimplemented!()
-            }
+            Something(n) => unimplemented!(),
         });
     }
     min
@@ -69,7 +67,7 @@ impl NumberOrNothing {
 
 // Now we are ready to run our new code. Remember to change `main.rs` appropriately.
 fn read_vec() -> Vec<i32> {
-    vec![18,5,7,3,9,27]
+    vec![18, 5, 7, 3, 9, 27]
 }
 pub fn main() {
     let vec = read_vec();
@@ -80,4 +78,3 @@ pub fn main() {
 
 // **Exercise 02.1**: Change your program such that it computes the minimum of a `Vec<f32>` (where `f32` is the type
 // of 32-bit floating-point numbers). You should not change `vec_min` in any way, obviously!
-

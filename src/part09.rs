@@ -58,7 +58,7 @@ fn print_digits_v2(b: &BigInt) {
 }
 
 // **Exercise 09.1**: Write a testcase for the iterator, making sure it yields the corrects numbers.
-// 
+//
 // **Exercise 09.2**: Write a function `iter_ldf` that iterates over the digits with the least-significant
 // digits coming first. Write a testcase for it.
 
@@ -68,7 +68,8 @@ fn iter_invalidation_demo() {
     let mut b = BigInt::new(1 << 63) + BigInt::new(1 << 16) + BigInt::new(1 << 63);
     for digit in b.iter() {
         println!("{}", digit);
-        /*b = b + BigInt::new(1);*/                                 /* BAD! */
+        // b = b + BigInt::new(1);
+        // BAD!
     }
 }
 
@@ -82,4 +83,3 @@ impl<'a> IntoIterator for &'a BigInt {
     }
 }
 // With this in place, you can now replace `b.iter()` in `main` by `&b`. Go ahead and try it! <br/>
-

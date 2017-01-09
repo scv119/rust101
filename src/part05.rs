@@ -30,9 +30,9 @@ impl BigInt {
     // still asks us to make our intention of modifying it explicit. This `mut` is *not* part of the
     // type of `from_vec` - the caller has to give up ownership of `v` anyway, so they don't care anymore
     // what you do to it.
-    // 
+    //
     // **Exercise 05.1**: Implement this function.
-    // 
+    //
     // *Hint*: You can use `pop` to remove the last element of a vector.
     pub fn from_vec(mut v: Vec<u64>) -> Self {
         unimplemented!()
@@ -41,7 +41,7 @@ impl BigInt {
 
 // ## Cloning
 fn clone_demo() {
-    let v = vec![0,1 << 16];
+    let v = vec![0, 1 << 16];
     let b1 = BigInt::from_vec((&v).clone());
     let b2 = BigInt::from_vec(v);
 }
@@ -52,8 +52,8 @@ impl Clone for BigInt {
     }
 }
 
-// We can also make the type `SomethingOrNothing<T>` implement `Clone`. 
-use part02::{SomethingOrNothing,Something,Nothing};
+// We can also make the type `SomethingOrNothing<T>` implement `Clone`.
+use part02::{SomethingOrNothing, Something, Nothing};
 impl<T: Clone> Clone for SomethingOrNothing<T> {
     fn clone(&self) -> Self {
         unimplemented!()
@@ -74,7 +74,7 @@ fn work_on_variant(mut var: Variant, text: String) {
         Variant::Number(ref mut n) => ptr = n,
         Variant::Text(_) => return,
     }
-    /* var = Variant::Text(text); */                                /* BAD! */
+    // var = Variant::Text(text);
+    // BAD!
     *ptr = 1337;
 }
-

@@ -5,14 +5,16 @@
 // ## Slices
 
 pub fn sort<T: PartialOrd>(data: &mut [T]) {
-    if data.len() < 2 { return; }
+    if data.len() < 2 {
+        return;
+    }
 
     // We decide that the element at 0 is our pivot, and then we move our cursors through the rest of the slice,
     // making sure that everything on the left is no larger than the pivot, and everything on the right is no smaller.
     let mut lpos = 1;
     let mut rpos = data.len();
-    /* Invariant: pivot is data[0]; everything with index (0,lpos) is <= pivot;
-       [rpos,len) is >= pivot; lpos < rpos */
+    // Invariant: pivot is data[0]; everything with index (0,lpos) is <= pivot;
+    // [rpos,len) is >= pivot; lpos < rpos
     loop {
         // **Exercise 14.1**: Complete this Quicksort loop. You can use `swap` on slices to swap two elements. Write a
         // test function for `sort`.
@@ -20,7 +22,7 @@ pub fn sort<T: PartialOrd>(data: &mut [T]) {
     }
 
     // Once our cursors met, we need to put the pivot in the right place.
-    data.swap(0, lpos-1);
+    data.swap(0, lpos - 1);
 
     // Finally, we split our slice to sort the two halves. The nice part about slices is that splitting them is cheap:
     let (part1, part2) = data.split_at_mut(lpos);
@@ -105,4 +107,3 @@ Options:
 // expression, it's called [regex](https://crates.io/crates/regex). Add this crate to the dependencies of your workspace, add an option ("-r") to switch
 // the pattern to regular-expression mode, and change `filter_lines` to honor this option. The documentation of regex is available from its crates.io site.
 // (You won't be able to use the `regex!` macro if you are on the stable or beta channel of Rust. But it wouldn't help for our use-case anyway.)
-

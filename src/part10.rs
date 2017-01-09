@@ -58,7 +58,7 @@ impl BigInt {
 
 // Now that we saw how to write a function that operates on closures, let's see how to write a closure.
 pub fn print_with_prefix(b: &BigInt, prefix: String) {
-    b.act(|digit| println!("{}{}", prefix, digit) );
+    b.act(|digit| println!("{}{}", prefix, digit));
 }
 // You can change `main` to call this function, and you should notice - nothing, no difference in behavior.
 // But we wrote much less boilerplate code!
@@ -67,7 +67,10 @@ pub fn print_with_prefix(b: &BigInt, prefix: String) {
 // For example, we can use that to count the digits as they are printed.
 pub fn print_and_count(b: &BigInt) {
     let mut count: usize = 0;
-    b.act(|digit| { println!("{}: {}", count, digit); count = count +1; } );
+    b.act(|digit| {
+        println!("{}: {}", count, digit);
+        count = count + 1;
+    });
     println!("There are {} digits", count);
 }
 
@@ -96,4 +99,3 @@ fn filter_vec_by_divisor(v: &Vec<i32>, divisor: i32) -> Vec<i32> {
 // that can act on iterators. Try using some of them. What about a function that sums the even numbers of an iterator? Or a function that computes the
 // product of those numbers that sit at odd positions? A function that checks whether a vector contains a certain number? Whether all numbers are
 // smaller than some threshold? Be creative!
-

@@ -17,7 +17,7 @@ impl Callbacks {
     }
 
     // Registration works just like last time, except that we are creating an `Rc` now.
-    pub fn register<F: Fn(i32)+'static>(&mut self, callback: F) {
+    pub fn register<F: Fn(i32) + 'static>(&mut self, callback: F) {
         unimplemented!()
     }
 
@@ -32,7 +32,8 @@ impl Callbacks {
 // Time for a demo!
 fn demo(c: &mut Callbacks) {
     c.register(|val| println!("Callback 1: {}", val));
-    c.call(0); c.clone().call(1);
+    c.call(0);
+    c.clone().call(1);
 }
 
 pub fn main() {
@@ -55,7 +56,8 @@ fn demo_cell(c: &mut Callbacks) {
         } );
     }
 
-    c.call(2); c.clone().call(3);
+    c.call(2);
+    c.clone().call(3);
 }
 
 
@@ -72,7 +74,7 @@ impl CallbacksMut {
         CallbacksMut { callbacks: Vec::new() }
     }
 
-    pub fn register<F: FnMut(i32)+'static>(&mut self, callback: F) {
+    pub fn register<F: FnMut(i32) + 'static>(&mut self, callback: F) {
         unimplemented!()
     }
 
@@ -96,13 +98,13 @@ fn demo_mut(c: &mut CallbacksMut) {
     {
         let mut count: usize = 0;
         c.register(move |val| {
-            count = count+1;
+            count = count + 1;
             println!("Callback 2: {} ({}. time)", val, count);
-        } );
+        });
     }
-    c.call(1); c.clone().call(2);
+    c.call(1);
+    c.clone().call(2);
 }
 
 // **Exercise 12.1**: Write some piece of code using only the available, public interface of `CallbacksMut` such that a reentrant call to a closure
 // is happening, and the program panics because the `RefCell` refuses to hand out a second mutable borrow of the closure's environment.
-

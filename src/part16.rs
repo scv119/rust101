@@ -19,7 +19,7 @@ type NodePtr<T> = *mut Node<T>;
 // will own data of type `T`.
 pub struct LinkedList<T> {
     first: NodePtr<T>,
-    last:  NodePtr<T>,
+    last: NodePtr<T>,
     _marker: PhantomData<T>,
 }
 
@@ -34,13 +34,21 @@ fn box_into_raw<T>(b: Box<T>) -> *mut T {
 impl<T> LinkedList<T> {
     // A new linked list just contains null pointers. `PhantomData` is how we construct any `PhantomData<T>`.
     pub fn new() -> Self {
-        LinkedList { first: ptr::null_mut(), last: ptr::null_mut(), _marker: PhantomData }
+        LinkedList {
+            first: ptr::null_mut(),
+            last: ptr::null_mut(),
+            _marker: PhantomData,
+        }
     }
 
     // This function adds a new node to the end of the list.
     pub fn push_back(&mut self, t: T) {
         // Create the new node, and make it a raw pointer.
-        let new = Box::new( Node { data: t, next: ptr::null_mut(), prev: self.last } );
+        let new = Box::new(Node {
+            data: t,
+            next: ptr::null_mut(),
+            prev: self.last,
+        });
         let new = box_into_raw(new);
         // Update other pointers to this node.
         if self.last.is_null() {
@@ -62,12 +70,17 @@ impl<T> LinkedList<T> {
 
     // Next, we are going to provide an iterator.
     pub fn iter_mut(&mut self) -> IterMut<T> {
-        IterMut { next: self.first, _marker: PhantomData  }
+        IterMut {
+            next: self.first,
+            _marker: PhantomData,
+        }
     }
 }
 
 
-pub struct IterMut<'a, T> where T: 'a {
+pub struct IterMut<'a, T>
+    where T: 'a
+{
     next: NodePtr<T>,
     _marker: PhantomData<&'a mut LinkedList<T>>,
 }
@@ -112,4 +125,3 @@ impl<T> Drop for LinkedList<T> {
 }
 
 // ## The End
-

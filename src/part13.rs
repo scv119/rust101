@@ -63,12 +63,12 @@ fn output_lines(options: Arc<Options>, in_channel: Receiver<String>) {
             for line in in_channel.iter() {
                 unimplemented!()
             }
-        },
+        }
         Count => {
             // We are supposed to count the number of matching lines. There's a convenient iterator adapter that
             // we can use for this job.
             unimplemented!()
-        },
+        }
         SortAndPrint => {
             // We are asked to sort the matching lines before printing. So let's collect them all in a local vector...
             let mut data: Vec<String> = in_channel.iter().collect();
@@ -94,9 +94,7 @@ pub fn run(options: Options) {
 
     // Same with the filter thread.
     let options2 = options.clone();
-    let handle2 = thread::spawn(move || {
-        filter_lines(options2, line_receiver, filtered_sender)
-    });
+    let handle2 = thread::spawn(move || filter_lines(options2, line_receiver, filtered_sender));
 
     // And the output thread.
     let options3 = options.clone();
@@ -115,7 +113,7 @@ pub fn main() {
                     "src/part11.rs".to_string(),
                     "src/part12.rs".to_string()],
         pattern: "let".to_string(),
-        output_mode: Print
+        output_mode: Print,
     };
     run(options);
 }
@@ -123,6 +121,3 @@ pub fn main() {
 // **Exercise 13.1**: Change rgrep such that it prints not only the matching lines, but also the name of the file
 // and the number of the line in the file. You will have to change the type of the channels from `String` to something
 // that records this extra information.
-
-
-
