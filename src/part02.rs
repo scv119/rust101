@@ -41,7 +41,7 @@ pub fn vec_min<T: Minimum>(v: Vec<T>) -> SomethingOrNothing<T> {
         min = Something(match min {
             Nothing => e,
             // Here, we can now call the `min` function of the trait.
-            Something(n) => unimplemented!(),
+            Something(n) => e.min(n),
         });
     }
     min
@@ -51,7 +51,13 @@ pub fn vec_min<T: Minimum>(v: Vec<T>) -> SomethingOrNothing<T> {
 // To make `vec_min` usable with a `Vec<i32>`, we implement the `Minimum` trait for `i32`.
 impl Minimum for i32 {
     fn min(self, b: Self) -> Self {
-        unimplemented!()
+        if self < b { self } else { b }
+    }
+}
+
+impl Minimum for f32 {
+    fn min(self, b: Self) -> Self {
+        if self < b { self } else { b }
     }
 }
 

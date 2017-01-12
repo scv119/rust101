@@ -54,12 +54,12 @@ fn vec_inc(v: &mut Vec<i32>) {
     }
 }
 // Here's an example of calling `vec_inc`.
-fn mutable_ref_demo() {
+pub fn mutable_ref_demo() {
     let mut v = vec![5, 4, 3, 2, 1];
-    // let first = &v[0];
     vec_inc(&mut v);
     vec_inc(&mut v);
-    // println!("The first element is: {}", *first);
+    let first = &v[0];
+    println!("The first element is: {}", *first);
     // BAD!
 }
 

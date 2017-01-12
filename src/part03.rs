@@ -8,8 +8,8 @@
 use std::io::prelude::*;
 use std::io;
 
-fn read_vec() -> Vec<i32> {
-    let mut vec: Vec<i32> = Vec::<i32>::new();
+fn read_vec() -> Vec<f32> {
+    let mut vec: Vec<f32> = Vec::<f32>::new();
     // The central handle to the standard input is made available by the function `io::stdin`.
     let stdin = io::stdin();
     println!("Enter a list of numbers, one per line. End with Ctrl-D (Linux) or Ctrl-Z (Windows).");
@@ -22,10 +22,10 @@ fn read_vec() -> Vec<i32> {
         let line = line.unwrap();
         // Now that we have our `String`, we want to make it an `i32`.
 
-        match line.trim().parse::<i32>() {
-            Ok(num) => unimplemented!(),
+        match line.trim().parse::<f32>() {
+            Ok(num) => vec.push(num),
             // We don't care about the particular error, so we ignore it with a `_`.
-            Err(_) => unimplemented!(),
+            Err(_) => println!("Invalid Input."),
         }
     }
 
@@ -40,7 +40,8 @@ use part02::{SomethingOrNothing, Something, Nothing, vec_min};
 // and tell you the minimum. Neat, isn't it?
 pub fn main() {
     let vec = read_vec();
-    unimplemented!()
+    let min = vec_min(vec);
+    min.print2();
 }
 
 // **Exercise 03.1**: Define a trait `Print` to write a generic version of `SomethingOrNothing::print`.
@@ -54,11 +55,27 @@ pub fn main() {
 //
 // *Hint*: There is a macro `print!` for printing without appending a newline.
 pub trait Print {
-    // Add things here
+    fn print(self);
 }
+
+impl Print for i32 {
+    fn print(self) {
+        println!("This is {}", self);
+    }
+}
+
+impl Print for f32 {
+    fn print(self) {
+        println!("This is {}", self);
+    }
+}
+
 impl<T: Print> SomethingOrNothing<T> {
     fn print2(self) {
-        unimplemented!()
+        match self {
+            Something(t) => t.print(),
+            Nothing => println!("Nothing here"),
+        }
     }
 }
 
