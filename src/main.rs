@@ -26,5 +26,5 @@ mod part16;
 
 // This decides which part is actually run.
 fn main() {
-    part04::mutable_ref_demo();
+    part05::clone_demo();
 }

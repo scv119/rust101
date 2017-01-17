@@ -11,9 +11,9 @@ pub struct BigInt {
 impl BigInt {
     pub fn new(x: u64) -> Self {
         if x == 0 {
-            unimplemented!()
+            BigInt { data: vec![] }
         } else {
-            unimplemented!()
+            BigInt { data: vec![x] }
         }
     }
 
@@ -21,7 +21,7 @@ impl BigInt {
         if self.data.len() == 0 {
             true
         } else {
-            unimplemented!()
+            self.data[self.data.len() - 1] != 0
         }
     }
 
@@ -35,20 +35,27 @@ impl BigInt {
     //
     // *Hint*: You can use `pop` to remove the last element of a vector.
     pub fn from_vec(mut v: Vec<u64>) -> Self {
-        unimplemented!()
+        while v.len() > 0 && v[v.len() - 1] == 0 {
+            v.pop();
+        }
+        BigInt { data: v }
     }
 }
 
 // ## Cloning
-fn clone_demo() {
-    let v = vec![0, 1 << 16];
+pub fn clone_demo() {
+    let v = vec![1, 1 << 16];
     let b1 = BigInt::from_vec((&v).clone());
     let b2 = BigInt::from_vec(v);
+    match b2.smallest_digit() {
+        Nothing => print!("Nothing"),
+        Something(n) => print!("{}", n),
+    }
 }
 
 impl Clone for BigInt {
     fn clone(&self) -> Self {
-        unimplemented!()
+        BigInt { data: self.data.clone() }
     }
 }
 
@@ -56,7 +63,29 @@ impl Clone for BigInt {
 use part02::{SomethingOrNothing, Something, Nothing};
 impl<T: Clone> Clone for SomethingOrNothing<T> {
     fn clone(&self) -> Self {
-        unimplemented!()
+        match *self {
+            Nothing => Nothing,
+            Something(ref v) => Something(v.clone()),
+        }
+    }
+}
+
+impl BigInt {
+    pub fn smallest_digit(&self) -> SomethingOrNothing<u64> {
+        let mut min = Nothing;
+        for e in self.data.iter() {
+            min = match min {
+                Nothing => Something(*e),
+                Something(n) => Something(if *e < n { *e } else { n }),
+            }
+        }
+        min
+    }
+
+    pub fn print(&self) {
+        for e in self.data.iter() {
+            print!("{}", e);
+        }
     }
 }
 
